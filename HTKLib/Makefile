@@ -25,14 +25,14 @@ top_srcdir = ..
 
 prefix = /home/rhapsody0710/External/Dev/htk/build
 exec_prefix = ${prefix}
-bindir = ${exec_prefix}/bin.linux
+bindir = ${exec_prefix}/bin
 sbindir = ${exec_prefix}/sbin
 libexecdir = ${exec_prefix}/libexec
 datadir = ${prefix}/share
 sysconfdir = ${prefix}/etc
 sharedstatedir = ${prefix}/com
 localstatedir = ${prefix}/var
-libdir = ${exec_prefix}/lib.linux
+libdir = ${exec_prefix}/lib
 infodir = ${prefix}/share/info
 mandir = ${prefix}/share/man
 includedir = ${prefix}/include
@@ -42,8 +42,7 @@ hlib = .
 HLIBS = ${exec_prefix}/lib/HTKLib.a
 
 CC     = gcc
-#CFLAGS := $(CFLAGS) -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -I. -DPHNALG
-CFLAGS := $(CFLAGS) -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -I. -DPHNALG
+CFLAGS := $(CFLAGS) -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -m64 -g -I. -DPHNALG
 RANLIB = ranlib
 INSTALL= /usr/bin/install -c
 target = HTKLib.a
@@ -74,7 +73,8 @@ objects = HGraf.o esig_asc.o \
 	HUtil.o \
 	HVQ.o \
 	HWave.o \
-	strarr.o 
+	strarr.o \
+	get_bias.o
 
 lvobjects = $(basename HGraf.o).lv.o esig_asc.lv.o \
 	esig_edr.lv.o \
@@ -103,7 +103,8 @@ lvobjects = $(basename HGraf.o).lv.o esig_asc.lv.o \
 	HUtil.lv.o \
 	HVQ.lv.o \
 	HWave.lv.o \
-	strarr.lv.o 
+	strarr.lv.o \
+	get_bias.lv.o
 
 all:    HTKLib.a HTKLiblv.a
 

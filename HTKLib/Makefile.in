@@ -73,7 +73,8 @@ objects = @HGRAF@ esig_asc.o \
 	HUtil.o \
 	HVQ.o \
 	HWave.o \
-	strarr.o 
+	strarr.o \
+	get_bias.o
 
 lvobjects = $(basename @HGRAF@).lv.o esig_asc.lv.o \
 	esig_edr.lv.o \
@@ -102,7 +103,8 @@ lvobjects = $(basename @HGRAF@).lv.o esig_asc.lv.o \
 	HUtil.lv.o \
 	HVQ.lv.o \
 	HWave.lv.o \
-	strarr.lv.o 
+	strarr.lv.o \
+	get_bias.lv.o
 
 all:    HTKLib.a HTKLiblv.a
 

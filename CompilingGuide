@@ -1,7 +1,8 @@
 Step 1:
-    $ ./configure CFLAGS=-m64 CPPFLAGS=-m64
+    $ ./configure --disable-hlmtools --prefix=`pwd`/build/ CFLAGS="-m64 -g" CPPFLAGS="-m64 -g" 
 Step 2:
     Edit HLMTools/Makefile, replace 8 spaces with 1 tab (line 77)
 Step 3:
     $ make
+    $ make install
 

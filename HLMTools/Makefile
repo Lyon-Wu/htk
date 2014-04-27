@@ -27,14 +27,14 @@ top_srcdir = ..
 
 prefix = /home/rhapsody0710/External/Dev/htk/build
 exec_prefix = ${prefix}
-bindir = ${exec_prefix}/bin.linux
+bindir = ${exec_prefix}/bin
 sbindir = ${exec_prefix}/sbin
 libexecdir = ${exec_prefix}/libexec
 datadir = ${prefix}/share
 sysconfdir = ${prefix}/etc
 sharedstatedir = ${prefix}/com
 localstatedir = ${prefix}/var
-libdir = ${exec_prefix}/lib.linux
+libdir = ${exec_prefix}/lib
 infodir = ${prefix}/share/info
 mandir = ${prefix}/share/man
 includedir = ${prefix}/include
@@ -43,8 +43,7 @@ hlib    = 	../HTKLib
 llib    = 	../HLMLib
 HLIBS   = 	$(hlib)/HTKLib.a $(llib)/HLMLib.a
 CC      = 	gcc
-#CFLAGS  = 	-m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -I$(hlib) -I$(llib) 
-CFLAGS  = 	-ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -I$(hlib) -I$(llib) 
+CFLAGS  = 	-m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -m64 -g -I$(hlib) -I$(llib) 
 LDFLAGS = 	-L/usr/X11R6/lib  $(HLIBS) -lm
 INSTALL = 	/usr/bin/install -c
 PROGS   =	Cluster HLMCopy LAdapt LBuild LFoF \
@@ -55,9 +54,9 @@ all:  $(PROGS)
 
 # build $(PROGS)
 %: %.c $(HLIBS)
-	if [ ! -d $(bindir) -a X_yes = X_yes ] ; then mkdir -p $(bindir) ; fi
+	if [ ! -d $(bindir) -a X_ = X_yes ] ; then mkdir -p $(bindir) ; fi
 	$(CC) -o $@ $(CFLAGS) $^ $(LDFLAGS)
-	if [ X_yes = X_yes ] ; then $(INSTALL) -m 755 $@ $(bindir) ; fi
+	if [ X_ = X_yes ] ; then $(INSTALL) -m 755 $@ $(bindir) ; fi
 
 strip: $(PROGS)
 	-strip $(PROGS)
@@ -75,6 +74,6 @@ install: mkinstalldir $(PROGS)
 	for program in $(PROGS) ; do $(INSTALL) -m 755 $${program} $(bindir) ; done
 
 mkinstalldir:
-	if [ ! -d $(bindir) -a X_yes = X_yes ] ; then mkdir -p $(bindir) ; fi
+	if [ ! -d $(bindir) -a X_ = X_yes ] ; then mkdir -p $(bindir) ; fi
 
 .PHONY: all strip clean cleanup distclean install mkinstalldir

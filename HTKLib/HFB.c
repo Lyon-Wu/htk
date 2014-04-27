@@ -1019,11 +1019,13 @@ static void Setotprob(AlphaBeta *ab, FBInfo *fbInfo, ParmBuf pbuf,
       if (trace&T_OUT && NonSkipRegion(skipstart,skipend,t)) 
          printf(" Q%2d: ",q);
       hmm = ab->al_qList[q]; Nq = hmm->numStates; /* GET A HMM */
-      modelBias = get_bias(HMMPhysName(hmm, hset));
+      modelBias = get_bias(HMMPhysName(hset, hmm));
 
       float originalF0 = ot.fv[1][1];
       ot.fv[1][1] -= modelBias;
-      
+      /*  printf("ModelBias is %f\n", modelBias);
+          printf("New ot.fv[1][1] is %f\n\n", ot.fv[1][1]);
+       */
       if (otprob[t][q] == NULL)
          {
             outprob = otprob[t][q] = CreateOjsprob(&ab->abMem,Nq,S);

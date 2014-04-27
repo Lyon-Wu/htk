@@ -26,23 +26,22 @@ top_srcdir = .
 
 prefix = /home/rhapsody0710/External/Dev/htk/build
 exec_prefix = ${prefix}
-bindir = ${exec_prefix}/bin.linux
+bindir = ${exec_prefix}/bin
 sbindir = ${exec_prefix}/sbin
 libexecdir = ${exec_prefix}/libexec
 datadir = ${prefix}/share
 sysconfdir = ${prefix}/etc
 sharedstatedir = ${prefix}/com
 localstatedir = ${prefix}/var
-libdir = ${exec_prefix}/lib.linux
+libdir = ${exec_prefix}/lib
 infodir = ${prefix}/share/info
 mandir = ${prefix}/share/man
 includedir = ${prefix}/include
 oldincludedir = /usr/include
 
 CC = gcc
-CPPFLAGS = 
-#CFLAGS = $(CPPFLAGS) -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2
-CFLAGS = $(CPPFLAGS) -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2
+CPPFLAGS = -m64 -g
+CFLAGS = $(CPPFLAGS) -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -m64 -g
 LDFLAGS = -L/usr/X11R6/lib 
 LIBS = -lm -lX11 
 INSTALL = /usr/bin/install -c
@@ -92,7 +91,7 @@ GZIP_ENV = --best
 .SUFFIXES:
 
 # build rules
-all: htktools hlmtools
+all: htktools
 $(HTKLIB)/HTKLib.a:
 	(cd $(HTKLIB) && $(MAKE) HTKLib.a) \
 	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac;
@@ -145,7 +144,7 @@ distclean: clean
 	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 	done && test -z "$$fail"
 
-install: install-htktools install-hlmtools
+install: install-htktools
 docs: book
 
 .PHONY: all doc install clean distclean htklib-decode \

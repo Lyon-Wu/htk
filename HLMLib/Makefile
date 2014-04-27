@@ -26,22 +26,21 @@ top_srcdir = ..
 
 prefix = /home/rhapsody0710/External/Dev/htk/build
 exec_prefix = ${prefix}
-bindir = ${exec_prefix}/bin.linux
+bindir = ${exec_prefix}/bin
 sbindir = ${exec_prefix}/sbin
 libexecdir = ${exec_prefix}/libexec
 datadir = ${prefix}/share
 sysconfdir = ${prefix}/etc
 sharedstatedir = ${prefix}/com
 localstatedir = ${prefix}/var
-libdir = ${exec_prefix}/lib.linux
+libdir = ${exec_prefix}/lib
 infodir = ${prefix}/share/info
 mandir = ${prefix}/share/man
 includedir = ${prefix}/include
 oldincludedir = /usr/include
 
 CC = gcc
-#CFLAGS = -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -DSANITY -I. -I../HTKLib/
-CFLAGS = -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -g -O2 -DSANITY -I. -I../HTKLib/
+CFLAGS = -m32 -ansi -D_SVID_SOURCE -DOSS_AUDIO -D'ARCH="x86_64"' -Wall -Wno-switch -m64 -g -DSANITY -I. -I../HTKLib/
 RANLIB = ranlib
 INSTALL = /usr/bin/install -c
 target  = HLMLib.a
