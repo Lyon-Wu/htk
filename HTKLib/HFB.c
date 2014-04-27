@@ -49,6 +49,7 @@ char *hfb_vc_id = "$Id: HFB.c,v 1.1.1.1 2006/10/11 09:54:57 jal58 Exp $";
 #include "HUtil.h"
 #include "HAdapt.h"
 #include "HFB.h"
+#include "get_bias.h"
 
 
 /* ------------------- Trace Information ------------------------------ */
@@ -1000,11 +1001,12 @@ static void Setotprob(AlphaBeta *ab, FBInfo *fbInfo, ParmBuf pbuf,
    int skipstart, skipend;
    HMMSet *hset;
    Boolean seenState=FALSE;
+   float modelBias = 0.0;
    
    hset = fbInfo->al_hset;
    skipstart = fbInfo->skipstart;
    skipend = fbInfo->skipend;
-   p = ab->pInfo;
+   p = ab->pInfo; /* Pruning information */
    otprob = ab->otprob;
    ReadAsTable(pbuf,t-1,&ot);
    if (hset->hsKind == TIEDHS)
@@ -1016,7 +1018,12 @@ static void Setotprob(AlphaBeta *ab, FBInfo *fbInfo, ParmBuf pbuf,
    for (q=qHi;q>=qLo;q--) {
       if (trace&T_OUT && NonSkipRegion(skipstart,skipend,t)) 
          printf(" Q%2d: ",q);
-      hmm = ab->al_qList[q]; Nq = hmm->numStates;
+      hmm = ab->al_qList[q]; Nq = hmm->numStates; /* GET A HMM */
+      modelBias = get_bias(HMMPhysName(hmm, hset));
+
+      float originalF0 = ot.fv[1][1];
+      ot.fv[1][1] -= modelBias;
+      
       if (otprob[t][q] == NULL)
          {
             outprob = otprob[t][q] = CreateOjsprob(&ab->abMem,Nq,S);
@@ -1025,7 +1032,7 @@ static void Setotprob(AlphaBeta *ab, FBInfo *fbInfo, ParmBuf pbuf,
                outprobj = outprob[j];
                for (s=1;s<=S;s++,ste++){
                   switch (hset->hsKind){
-                  case TIEDHS:  /* SOutP deals with tied mix calculation */
+                  case TIEDHS:  /* OutP deals with tied mix calculation */
                   case DISCRETEHS:
                      if (S==1) {
                         outprobj[0] = NewOtprobVec(&ab->abMem,1);
@@ -1074,6 +1081,7 @@ static void Setotprob(AlphaBeta *ab, FBInfo *fbInfo, ParmBuf pbuf,
                }
             }
          }
+      ot.fv[1][1] += modelBias;
       if (trace&T_OUT && NonSkipRegion(skipstart,skipend,t)) 
          printf("\n");
    }
