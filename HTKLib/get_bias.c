@@ -7,6 +7,10 @@
  */
 #include <string.h>
 #include <stdlib.h>
+#include <get_bias.h>
+/*
+#include <stdio.h>
+*/
 float get_bias(char *modelName){
     if (modelName == NULL){
         return -1.0;
@@ -17,7 +21,16 @@ float get_bias(char *modelName){
         return 0.0;
     }
     float result = 0;
-    result = atof(&modelName[1]);
+    result = 10 * (modelName[1] - '0') + modelName[2] - '0';
     return result;
 }
+
+/*
+int main(){
+    printf("N0\'s bias is %f\n", get_bias("N0"));
+    printf("N52\'s bias is %f\n", get_bias("N64"));
+    return 0;
+}
+*/
+
 
